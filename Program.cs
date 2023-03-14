@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-Piece selected = null;
-List<Piece> pieces = new List<Piece>();
+Domino selected = null;
+List<Domino> pieces = new List<Domino>();
 
 Bitmap bmp = null;
 Graphics g = null;
@@ -65,7 +65,7 @@ form.Load += delegate
     int j = 0, k = 0;
     for (int i = 0; i < 28; i++)
     {
-        Piece piece = new Piece();
+        Domino piece = new Domino();
         piece.CenterLocation = new PointF(
             pb.Width * Random.Shared.NextSingle(),
             pb.Height * Random.Shared.NextSingle()
@@ -130,8 +130,7 @@ tm.Tick += delegate
     {
         if (selected != null)
         {
-            selected.Angle += 
-                delta > 0 ? 2f : -2f;
+            selected.Rotate(delta > 0 ? 5f : -5f);
         }
 
         delta = 0;
@@ -142,7 +141,7 @@ tm.Tick += delegate
 
 Application.Run(form);
 
-public class Piece
+public class Domino
 {
     public PointF CenterLocation { get; set; }
     public float Angle { get; set; }
@@ -167,6 +166,8 @@ public class Piece
     public void Rotate(float dphi)
     {
         Angle += dphi;
+        if (Angle < 0f)
+            Angle += 360f;
         Angle = Angle % 360;
     }
 
