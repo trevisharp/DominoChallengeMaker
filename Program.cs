@@ -2,9 +2,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
+const int size = 100, margin = 40;
+
+// User Options
+bool seeLines = false;
+bool seeConections = true;
+
 Domino selected = null;
 List<Domino> dominoes = new List<Domino>();
 DominoGraph graph = null;
+GeometricGraph geom = null;
 
 Bitmap bmp = null;
 Graphics g = null;
@@ -53,6 +60,12 @@ form.KeyDown += (o, e) =>
     
     if (e.KeyCode == Keys.Q)
         delta = -1;
+    
+    if (e.KeyCode == Keys.L)
+        seeLines = !seeLines;
+    
+    if (e.KeyCode == Keys.C)
+        seeConections = !seeConections;
 };
 
 pb.MouseWheel += (o, e) =>
@@ -62,7 +75,6 @@ pb.MouseWheel += (o, e) =>
 
 form.Load += delegate
 {
-    const int size = 150, margin = 40;
     int j = 0, k = 0;
     int x = margin + size / 4, y = pb.Height - 2 * margin - 3 * size / 2;
     for (int i = 0; i < 28; i++)
@@ -91,6 +103,7 @@ form.Load += delegate
         dominoes.Add(piece);
     }
     graph = new DominoGraph(dominoes);
+    geom = new GeometricGraph(dominoes);
 
     bmp = new Bitmap(pb.Width, pb.Height);
     g = Graphics.FromImage(bmp);
@@ -104,7 +117,12 @@ tm.Tick += delegate
     g.Clear(Color.White);
 
     graph.Update();
-    graph.Draw(g);
+    if (seeConections)
+        graph.Draw(g);
+
+    geom.Update();
+    if (seeLines)
+        geom.Draw(g, pb.Width, pb.Height);
     
     foreach (var piece in dominoes)
     {

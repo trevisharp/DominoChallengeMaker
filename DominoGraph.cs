@@ -16,12 +16,13 @@ public class DominoGraph
             throw new ArgumentNullException("dominoes");
         
         this.dominoes = dominoes;
-        this.analyzeAndBuild();
+        this.Update();
     }
 
     public void Update()
     {
-        this.analyzeAndBuild();
+        this.startAdjacencyHashs();
+        this.buildConnections();
     }
 
     public void Draw(Graphics g)
@@ -68,12 +69,6 @@ public class DominoGraph
                 g.DrawLine(pen, dwX, upY);
             }
         }
-    }
-
-    private void analyzeAndBuild()
-    {
-        this.startAdjacencyHashs();
-        this.buildConnections();
     }
 
     private void startAdjacencyHashs()
