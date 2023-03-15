@@ -141,7 +141,7 @@ tm.Tick += delegate
     {
         if (selected != null)
         {
-            selected.Rotate(delta > 0 ? 5f : -5f);
+            selected.Rotate(delta > 0 ? 22.5f : -22.5f);
         }
 
         delta = 0;

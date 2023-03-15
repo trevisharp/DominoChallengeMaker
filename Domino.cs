@@ -66,6 +66,7 @@ public class Domino
         else if (mod > stopangle - 5f)
             trueAngle += stopangle - mod;
 
+        var state = g.Save();
         g.TranslateTransform(x, y);
         g.RotateTransform(trueAngle);
         g.TranslateTransform(-x, -y);
@@ -112,9 +113,7 @@ public class Domino
         drawDots(g, Up, new RectangleF(x - hfwid * .9f, y - hfhei * .9f, hfhei * .9f, 2 * hfwid * .9f));
         drawDots(g, Down, new RectangleF(x - hfwid * .9f, y + hfhei * .1f, hfhei * .9f, 2 * hfwid * .9f));
         
-        g.TranslateTransform(x, y);
-        g.RotateTransform(-trueAngle);
-        g.TranslateTransform(-x, -y);
+        g.Restore(state);
     }
 
     private void drawDots(Graphics g, int dots, RectangleF rect)
