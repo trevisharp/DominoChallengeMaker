@@ -16,6 +16,4 @@ public class Validator
         this.graph = graph;
         this.geo = geo;
     }
-
-    
 }
