@@ -17,7 +17,7 @@ public class Validator
         this.dominoes = dominoes;
         this.graph = graph;
         this.geo = geo;
-        this.rules = rules
+        this.rules = rules;
     }
 
     public bool Validate()
